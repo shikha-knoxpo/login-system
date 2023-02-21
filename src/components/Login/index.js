@@ -15,23 +15,16 @@ import google from "./icons/google.jpg";
 import linkedin from"./icons/linkedin.jpg";
 import stack from "./icons/stack.png";
 import git from "./icons/git.png";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import {useDispatch, useSelector} from 'react-redux';
+import { getLoginAction } from './state/LoginSlice';
+import { useNavigate } from 'react-router';
 
 const theme = createTheme();
 
 export default function SignIn() {
+    const dispatch = useDispatch();
+    const state=useSelector((state)=>state.loginDetail);
+    const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,6 +32,10 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    dispatch(getLoginAction({email: data.get('email'),
+    password: data.get('password')}))
+    //API is not working so have directly navigated to dashboard
+    navigate('/dashboard');
   };
 
   return (

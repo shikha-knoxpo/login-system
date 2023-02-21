@@ -10,7 +10,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Multiselect from "multiselect-react-dropdown";
 import { useState } from "react";
-
+import {useDispatch, useSelector} from 'react-redux';
+import { getRegisterAction } from './state/RegisterSlice';
+import { useNavigate } from 'react-router';
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -24,14 +26,17 @@ import PhoneInput from 'react-phone-number-input'
 const theme = createTheme();
 
 export default function SignUp() {
-    const [value, setValue] = useState()
+    const [value, setValue] = useState();
+    const dispatch = useDispatch();
+    const state=useSelector((state)=>state.loginDetail);
+    const navigate = useNavigate()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    //API call with dispatch(API call failed)
+    //dispatch(getLoginAction(data))
+    navigate('/login')
   };
 
   return (
